@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MusicDrop</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #050505;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .bg-glow {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .glow1,
+        .glow2 {
+            position: absolute;
+            width: 450px;
+            height: 450px;
+            border-radius: 50%;
+            filter: blur(120px);
+        }
+
+        .glow1 {
+            background: #7c3aed;
+            top: -100px;
+            left: 15%;
+            opacity: .25;
+        }
+
+        .glow2 {
+            background: #06b6d4;
+            bottom: -100px;
+            right: 15%;
+            opacity: .25;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 7%;
+            border-bottom: 1px solid rgba(255, 255, 255, .08);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(0, 0, 0, .4);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-box {
+            width: 45px;
+            height: 45px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #22d3ee, #9333ea);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 800;
+            color: black;
+            font-size: 20px;
+        }
+
+        .logo h1 {
+            font-size: 28px;
+            font-weight: 800;
+        }
+
+        nav {
+            display: flex;
+            gap: 35px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #b3b3b3;
+            transition: .3s;
+        }
+
+        nav a:hover {
+            color: white;
+        }
+
+        .launch-btn {
+            padding: 13px 24px;
+            border: none;
+            border-radius: 14px;
+            background: white;
+            color: black;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .launch-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .hero {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 60px;
+            padding: 80px 7%;
+            flex-wrap: wrap;
+        }
+
+        .hero-left {
+            flex: 1;
+            min-width: 320px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 12px 18px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .06);
+            border: 1px solid rgba(255, 255, 255, .08);
+            margin-bottom: 28px;
+            color: #d1d5db;
+            font-size: 14px;
+        }
+
+        .hero h2 {
+            font-size: 75px;
+            line-height: 1.05;
+            font-weight: 900;
+            margin-bottom: 25px;
+        }
+
+        .gradient {
+            background: linear-gradient(90deg, #22d3ee, #9333ea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            color: #9ca3af;
+            font-size: 18px;
+            line-height: 1.8;
+            max-width: 650px;
+            margin-bottom: 35px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+            margin-bottom: 45px;
+        }
+
+        .primary-btn {
+            padding: 17px 30px;
+            border: none;
+            border-radius: 18px;
+            background: linear-gradient(90deg, #22d3ee, #9333ea);
+            color: black;
+            font-weight: 800;
+            cursor: pointer;
+            transition: .3s;
+            font-size: 16px;
+        }
+
+        .primary-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .secondary-btn {
+            padding: 17px 30px;
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, .12);
+            background: rgba(255, 255, 255, .05);
+            color: white;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .secondary-btn:hover {
+            background: rgba(255, 255, 255, .1);
+        }
+
+        .stats {
+            display: flex;
+            gap: 55px;
+            flex-wrap: wrap;
+        }
+
+        .stats h3 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        .stats p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .hero-right {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            min-width: 320px;
+        }
+
+        .mockup {
+            width: 100%;
+            max-width: 430px;
+            padding: 30px;
+            border-radius: 35px;
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid rgba(255, 255, 255, .08);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 0 50px rgba(147, 51, 234, .15);
+        }
+
+        .mockup-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .album {
+            width: 60px;
+            height: 60px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #9333ea, #22d3ee);
+        }
+
+        .song-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px;
+            border-radius: 20px;
+            background: rgba(0, 0, 0, .45);
+            margin-bottom: 16px;
+            border: 1px solid rgba(255, 255, 255, .05);
+            transition: .3s;
+        }
+
+        .song-card:hover {
+            border-color: #22d3ee55;
+        }
+
+        .download-btn {
+            padding: 11px 18px;
+            border: none;
+            border-radius: 12px;
+            background: white;
+            color: black;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .progress-box {
+            margin-top: 25px;
+            padding: 18px;
+            border-radius: 20px;
+            background: linear-gradient(90deg, rgba(34, 211, 238, .15), rgba(147, 51, 234, .15));
+            border: 1px solid rgba(255, 255, 255, .08);
+        }
+
+        .progress-top {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            color: #d1d5db;
+            font-size: 14px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .08);
+            overflow: hidden;
+        }
+
+        .progress {
+            width: 82%;
+            height: 100%;
+            background: linear-gradient(90deg, #22d3ee, #9333ea);
+            border-radius: 999px;
+        }
+
+        section {
+            padding: 100px 7%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title p {
+            color: #22d3ee;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .section-title h2 {
+            font-size: 55px;
+            font-weight: 900;
+        }
+
+        .section-title span {
+            color: #9ca3af;
+            display: block;
+            margin-top: 15px;
+            font-size: 18px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 28px;
+        }
+
+        .feature-card {
+            padding: 35px;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid rgba(255, 255, 255, .08);
+            transition: .35s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 28px;
+            margin-bottom: 14px;
+        }
+
+        .feature-card p {
+            color: #9ca3af;
+            line-height: 1.8;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 28px;
+        }
+
+        .step-card {
+            position: relative;
+            padding: 35px;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, .04);
+            border: 1px solid rgba(255, 255, 255, .08);
+        }
+
+        .step-number {
+            position: absolute;
+            top: -18px;
+            left: 25px;
+            width: 45px;
+            height: 45px;
+            border-radius: 16px;
+            background: linear-gradient(90deg, #22d3ee, #9333ea);
+            color: black;
+            font-weight: 900;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .step-card h3 {
+            margin-top: 18px;
+            margin-bottom: 14px;
+            font-size: 28px;
+        }
+
+        .step-card p {
+            color: #9ca3af;
+            line-height: 1.7;
+        }
+
+        .cta {
+            padding: 70px;
+            border-radius: 45px;
+            background: linear-gradient(135deg, rgba(34, 211, 238, .08), rgba(147, 51, 234, .08));
+            border: 1px solid rgba(255, 255, 255, .08);
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: 60px;
+            line-height: 1.15;
+            font-weight: 900;
+            margin-bottom: 25px;
+        }
+
+        .cta p {
+            color: #9ca3af;
+            max-width: 750px;
+            margin: auto;
+            line-height: 1.8;
+            margin-bottom: 35px;
+            font-size: 18px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #6b7280;
+            border-top: 1px solid rgba(255, 255, 255, .08);
+            margin-top: 80px;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .search-box input {
+            flex: 1;
+            min-width: 250px;
+            padding: 18px;
+            border: none;
+            outline: none;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, .08);
+            color: white;
+            font-size: 16px;
+        }
+
+        .search-box button {
+            padding: 18px 28px;
+            border: none;
+            border-radius: 18px;
+            background: linear-gradient(90deg, #22d3ee, #9333ea);
+            color: black;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        #results {
+            margin-top: 35px;
+            display: grid;
+            gap: 20px;
+        }
+
+        .result-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid rgba(255, 255, 255, .08);
+            flex-wrap: wrap;
+        }
+
+        .result-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .result-left img {
+            width: 70px;
+            height: 70px;
+            border-radius: 16px;
+        }
+
+        .result-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .result-buttons button,
+        .result-buttons a {
+            padding: 12px 18px;
+            border: none;
+            border-radius: 14px;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .play-btn {
+            background: white;
+            color: black;
+        }
+
+        .download-btn2 {
+            background: linear-gradient(90deg, #22d3ee, #9333ea);
+            color: black;
+        }
+
+        #waveform {
+            margin-top: 25px;
+            border-radius: 20px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, .05);
+            padding: 15px;
+        }
+
+        .lyrics-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            padding: 20px;
+        }
+
+        .lyrics-content {
+            width: 100%;
+            max-width: 700px;
+            max-height: 80vh;
+            overflow: auto;
+            background: #0f0f0f;
+            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: 30px;
+            padding: 35px;
+            position: relative;
+        }
+
+        .close-lyrics {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        #lyricsText {
+            white-space: pre-wrap;
+            line-height: 1.8;
+            color: #d1d5db;
+        }
+
+        .favorite-btn {
+            background: #ff0055;
+            color: white;
+        }
+
+        .mini-player {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(95%, 900px);
+            background: rgba(15, 15, 15, .9);
+            border: 1px solid rgba(255, 255, 255, .08);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            z-index: 999;
+        }
+
+        .mini-player img {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+        }
+
+        .mini-info {
+            flex: 1;
+        }
+
+        .mini-info h4 {
+            margin-bottom: 4px;
+        }
+
+        .mini-info p {
+            color: #9ca3af;
+            font-size: 14px;
+        }
+
+        .mini-controls button {
+            width: 55px;
+            height: 55px;
+            border: none;
+            border-radius: 50%;
+            background: linear-gradient(90deg, #22d3ee, #9333ea);
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .trending-title {
+            margin-top: 60px;
+            margin-bottom: 20px;
+            font-size: 32px;
+        }
+
+        @media(max-width:900px) {
+
+            .hero h2 {
+                font-size: 55px;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .section-title h2 {
+                font-size: 40px;
+            }
+
+            .cta h2 {
+                font-size: 42px;
+            }
+        }
+
+        @media(max-width:600px) {
+
+            .hero {
+                padding-top: 50px;
+            }
+
+            .hero h2 {
+                font-size: 42px;
+            }
+
+            .section-title h2 {
+                font-size: 34px;
+            }
+
+            .cta {
+                padding: 45px 25px;
+            }
+
+            .cta h2 {
+                font-size: 34px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="bg-glow">
+        <div class="glow1"></div>
+        <div class="glow2"></div>
+    </div>
+
+    <header>
+        <div class="logo">
+            <div class="logo-box">M</div>
+            <h1>MusicDrop</h1>
+        </div>
+
+        <nav>
+            <a href="#features">Features</a>
+            <a href="#how">How It Works</a>
+            <a href="#download">Download</a>
+        </nav>
+
+        <button class="launch-btn">Launch App</button>
+    </header>
+
+    <section class="hero">
+        <div class="search-box">
+
+            <input type="text" id="songInput" placeholder="Search any song...">
+
+            <button onclick="searchMusic()">Search</button>
+
+        </div>
+        <div id="waveform"></div>
+
+        <div id="lyricsModal" class="lyrics-modal">
+            <div class="lyrics-content">
+                <button class="close-lyrics" onclick="closeLyrics()">✕</button>
+                <div id="lyricsText">Loading...</div>
+            </div>
+        </div>
+
+        <div class="mini-player" id="miniPlayer">
+            <img id="miniCover" src="" alt="cover">
+
+            <div class="mini-info">
+                <h4 id="miniTitle">No song playing</h4>
+                <p id="miniArtist">MusicDrop</p>
+            </div>
+
+            <div class="mini-controls">
+                <button onclick="togglePlay()">⏯</button>
+            </div>
+        </div>
+        <div id="results"></div>
+
+        <div class="hero-left">
+
+            <div class="badge">
+                ⚡ Powered by iTunes Preview API
+            </div>
+
+            <h2>
+                Download
+                <span class="gradient">30s Music</span>
+                Instantly.
+            </h2>
+
+            <p>
+                Search any song, preview the audio, and download high-quality
+                30-second clips in seconds. Fast, modern, and built for speed.
+            </p>
+
+            <div class="hero-buttons">
+                <button class="primary-btn">Start Downloading</button>
+                <button class="secondary-btn">View Demo</button>
+            </div>
+
+            <div class="stats">
+                <div>
+                    <h3>1M+</h3>
+                    <p>Downloads</p>
+                </div>
+
+                <div>
+                    <h3>100K+</h3>
+                    <p>Songs Available</p>
+                </div>
+
+                <div>
+                    <h3>0 Ads</h3>
+                    <p>Clean Experience</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="hero-right">
+
+            <div class="mockup">
+
+                <div class="mockup-top">
+
+                    <div>
+                        <p style="color:#9ca3af;font-size:14px;">Now Searching</p>
+                        <h3 style="margin-top:5px;">Blinding Lights</h3>
+                    </div>
+
+                    <div class="album"></div>
+
+                </div>
+
+                <div class="song-card">
+                    <div>
+                        <h4>The Weeknd - Blinding Lights</h4>
+                        <p style="color:#9ca3af;font-size:14px;">30s Preview Available</p>
+                    </div>
+
+                    <button class="download-btn">Download</button>
+                </div>
+
+                <div class="song-card">
+                    <div>
+                        <h4>Drake - One Dance</h4>
+                        <p style="color:#9ca3af;font-size:14px;">30s Preview Available</p>
+                    </div>
+
+                    <button class="download-btn">Download</button>
+                </div>
+
+                <div class="song-card">
+                    <div>
+                        <h4>Travis Scott - FE!N</h4>
+                        <p style="color:#9ca3af;font-size:14px;">30s Preview Available</p>
+                    </div>
+
+                    <button class="download-btn">Download</button>
+                </div>
+
+                <div class="progress-box">
+
+                    <div class="progress-top">
+                        <span>Downloading...</span>
+                        <span>82%</span>
+                    </div>
+
+                    <div class="progress-bar">
+                        <div class="progress"></div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <section id="features">
+
+        <div class="section-title">
+            <p>FEATURES</p>
+            <h2>Everything You Need</h2>
+            <span>
+                Clean UI, instant search, and blazing-fast downloads.
+            </span>
+        </div>
+
+        <div class="features">
+
+            <div class="feature-card">
+                <div class="feature-icon">🔎</div>
+                <h3>Instant Search</h3>
+                <p>Find songs instantly using the iTunes Search API.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🎧</div>
+                <h3>30s Preview</h3>
+                <p>Listen before downloading with built-in audio previews.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Fast Downloads</h3>
+                <p>One-click preview downloads with blazing speed.</p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section id="how">
+
+        <div class="section-title">
+            <p>HOW IT WORKS</p>
+            <h2>3 Simple Steps</h2>
+        </div>
+
+        <div class="steps">
+
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <h3>Search Song</h3>
+                <p>Search any artist or track instantly.</p>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <h3>Preview Audio</h3>
+                <p>Listen to the 30 second preview before download.</p>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <h3>Download</h3>
+                <p>Download the preview audio instantly in one click.</p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section id="download">
+
+        <div class="cta">
+
+            <h2>
+                Ready to build your
+                <span class="gradient">music downloader?</span>
+            </h2>
+
+            <p>
+                Built using HTML, CSS, JavaScript, and the iTunes Preview API
+                for fast and reliable music previews.
+            </p>
+
+            <div class="cta-buttons">
+                <button class="primary-btn">Download Now</button>
+                <button class="secondary-btn">GitHub Repo</button>
+            </div>
+
+        </div>
+
+    </section>
+
+    <footer>
+        © 2026 MusicDrop — Built with HTML CSS & JavaScript.
+    </footer>
+
+    <script>
+console.log("MusicDrop Premium Loaded");
+
+let currentAudio;
+let wave;
+let isPlaying = false;
+let currentSongUrl = "";
+
+const recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
+const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+
+window.onload = () => {
+  loadTrendingSongs();
+};
+
+async function searchMusic(customQuery = null){
+
+  const query = customQuery || document.getElementById("songInput").value;
+
+  if(!query) return;
+
+  const resultsDiv = document.getElementById("results");
+
+  resultsDiv.innerHTML = "<p>Searching...</p>";
+
+  saveRecentSearch(query);
+
+  try{
+
+    const response = await fetch(
+      `https://itunes.apple.com/search?term=${encodeURIComponent(query)}&entity=song&limit=12`
+    );
+
+    const data = await response.json();
+
+    resultsDiv.innerHTML = "";
+
+    data.results.forEach(song => {
+
+      const isFav = favorites.some(f => f.trackId === song.trackId);
+
+      const card = document.createElement("div");
+      card.className = "result-card";
+
+      card.innerHTML = `
+
+        <div class="result-left">
+
+          <img src="${song.artworkUrl100}" alt="cover">
+
+          <div>
+            <h3>${song.trackName}</h3>
+            <p style="color:#9ca3af; margin-top:4px;">
+              ${song.artistName}
+            </p>
+          </div>
+
+        </div>
+
+        <div class="result-buttons">
+
+          <button class="play-btn"
+            onclick="playPreview(
+              '${song.previewUrl}',
+              '${song.trackName.replace(/'/g,"\\'")}',
+              '${song.artistName.replace(/'/g,"\\'")}',
+              '${song.artworkUrl100}'
+            )">
+            ▶ Play
+          </button>
+
+          <button class="download-btn2"
+            onclick="downloadSong('${song.previewUrl}')">
+            ⬇ Download
+          </button>
+
+          <button class="download-btn2"
+            onclick="getLyrics(
+              '${song.artistName.replace(/'/g,"\\'")}',
+              '${song.trackName.replace(/'/g,"\\'")}'
+            )">
+            🎤 Lyrics
+          </button>
+
+          <button class="favorite-btn"
+            onclick='toggleFavorite(${JSON.stringify(song)})'>
+            ${isFav ? '❤️' : '🤍'}
+          </button>
+
+        </div>
+      `;
+
+      resultsDiv.appendChild(card);
+
+    });
+
+  }catch(err){
+
+    resultsDiv.innerHTML = "Error loading songs.";
+
+    console.log(err);
+
+  }
+
+}
+
+async function loadTrendingSongs(){
+  searchMusic("top songs india");
+}
+
+function playPreview(url,title,artist,cover){
+
+  currentSongUrl = url;
+
+  if(currentAudio){
+    currentAudio.pause();
+  }
+
+  currentAudio = new Audio(url);
+
+  currentAudio.play();
+
+  isPlaying = true;
+
+  document.getElementById("miniTitle").innerText = title;
+  document.getElementById("miniArtist").innerText = artist;
+  document.getElementById("miniCover").src = cover;
+
+  if(wave){
+    wave.destroy();
+  }
+
+  wave = WaveSurfer.create({
+    container:'#waveform',
+    waveColor:'#666',
+    progressColor:'#22d3ee',
+    barWidth:3,
+    cursorColor:'#9333ea',
+    height:90,
+    responsive:true
+  });
+
+  wave.load(url);
+
+  wave.on('ready',()=>{
+    wave.play();
+  });
+
+  dynamicGlow();
+
+}
+
+function togglePlay(){
+
+  if(!currentAudio) return;
+
+  if(isPlaying){
+    currentAudio.pause();
+    wave.pause();
+    isPlaying = false;
+  }else{
+    currentAudio.play();
+    wave.play();
+    isPlaying = true;
+  }
+
+}
+
+function downloadSong(url){
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "preview.mp3";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+
+}
+
+async function getLyrics(artist,song){
+
+  document.getElementById("lyricsModal").style.display = "flex";
+
+  const box = document.getElementById("lyricsText");
+
+  box.innerHTML = "Loading lyrics...";
+
+  try{
+
+    const res = await fetch(
+      `https://api.lyrics.ovh/v1/${artist}/${song}`
+    );
+
+    const data = await res.json();
+
+    box.innerHTML = `
+      <h2 style="margin-bottom:20px;">${song}</h2>
+      <p>${data.lyrics || 'Lyrics not found.'}</p>
+    `;
+
+  }catch(err){
+
+    box.innerHTML = "Lyrics unavailable.";
+
+  }
+
+}
+
+function closeLyrics(){
+  document.getElementById("lyricsModal").style.display = "none";
+}
+
+function toggleFavorite(song){
+
+  const exists = favorites.find(f => f.trackId === song.trackId);
+
+  if(exists){
+
+    const updated = favorites.filter(f => f.trackId !== song.trackId);
+
+    localStorage.setItem("favorites", JSON.stringify(updated));
+
+  }else{
+
+    favorites.push(song);
+
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+
+  }
+
+  searchMusic(document.getElementById("songInput").value);
+
+}
+
+function saveRecentSearch(query){
+
+  if(recentSearches.includes(query)) return;
+
+  recentSearches.unshift(query);
+
+  if(recentSearches.length > 8){
+    recentSearches.pop();
+  }
+
+  localStorage.setItem(
+    "recentSearches",
+    JSON.stringify(recentSearches)
+  );
+
+}
+
+function dynamicGlow(){
+
+  const glow1 = document.querySelector('.glow1');
+  const glow2 = document.querySelector('.glow2');
+
+  const colors = [
+    '#22d3ee',
+    '#9333ea',
+    '#ff0055',
+    '#00ff99',
+    '#ffaa00'
+  ];
+
+  glow1.style.background = colors[Math.floor(Math.random()*colors.length)];
+  glow2.style.background = colors[Math.floor(Math.random()*colors.length)];
+
+}
+
+document
+.getElementById("songInput")
+.addEventListener("keypress",function(e){
+
+  if(e.key === "Enter"){
+    searchMusic();
+  }
+
+});
+
+    </script>
+    
+    <script src="https://unpkg.com/wavesurfer.js"></script>
+</body>
+
+</html>
